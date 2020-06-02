@@ -1,5 +1,7 @@
 # Facebook-hackathon
 
+The master branch is in production at [mental-heal](https://mental-heal.herokuapp.com/). Any development should be done in development branch.
+
 ## Competition links
 
 [messenger-comp](https://fbmessaging2.devpost.com/?ref_content=online-hackathons&ref_feature=challenge&ref_medium=facebook-channel)
