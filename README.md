@@ -13,10 +13,15 @@
 
 ## Resources
 
+### ai comp
+
 - [wit.ai](https://wit.ai)
 - [pywit](https://github.com/wit-ai/pywit)
 - [pywit w/messenger example](https://github.com/wit-ai/pywit/blob/master/examples/messenger.py)
 
+--- 
+
+### messenger comp
 - [One time notification documentation](https://developers.facebook.com/docs/messenger-platform/send-messages/one-time-notification/)
 - [getting started with messenger bot api](https://developers.facebook.com/docs/messenger-platform/getting-started)
 - [pymessenger, may not need this..](https://github.com/davidchua/pymessenger)
