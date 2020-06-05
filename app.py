@@ -1,5 +1,2 @@
-from mental import create_app
-
-if __name__ == "__main__":
-    app = create_app()
-    app.run(debug=True)
+from fastmental import create_app
+app = create_app()

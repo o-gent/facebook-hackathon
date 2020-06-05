@@ -1,7 +1,2 @@
-Flask
-gunicorn
-Click
-itsdangerous
-Jinja2
-MarkupSafe
-Werkzeug
+fastapi
+uvicorn
