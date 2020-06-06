@@ -1,5 +1,6 @@
+from typing import List, Optional
+
 from pydantic import BaseModel
-from typing import List
 
 
 class Message(BaseModel):
@@ -11,6 +12,13 @@ class Message(BaseModel):
     quick_reply: dict
 
 
+class Read(BaseModel):
+    """
+    https://developers.facebook.com/docs/messenger-platform/reference/webhook-events/message-reads
+    """
+    watermark: int
+
+
 class Messages(BaseModel):
     """
     Mid-level model for "messages" events, meta data about message
@@ -19,7 +27,8 @@ class Messages(BaseModel):
     sender: dict # contains {"id": ".."}
     recipient: dict # contains {"id": ".."}
     timestamp: int
-    message: Message
+    message: Optional[Message]
+    read: Optional[Read]
 
 
 class WebhookEntry(BaseModel):
@@ -29,4 +38,4 @@ class WebhookEntry(BaseModel):
     """
     id: str
     time: int
-    messaging: List[Messages]
+    messaging: List[Messages] # even though this is an array, it will only contain one value

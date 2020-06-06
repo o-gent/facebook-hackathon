@@ -1,8 +1,10 @@
+from typing import List, Optional
+
 from fastapi import APIRouter, Request
-from typing import Optional, List
-from fastmental.models.messenger import WebhookEntry
 
 from fastmental.config import Config
+from fastmental.models.messenger import WebhookEntry
+from fastmental.response import fb_message
 
 router = APIRouter()
 
@@ -34,5 +36,5 @@ async def messenger_post(object: str, entries: List[WebhookEntry]):
     
     for entry in entries:
         print(entry.id)
-        for message in entry.messaging:
-            print(message.message.text)
+        message = entry.messaging[0] # even though this is an array, it will only contain one value
+        print(message.message.text)
