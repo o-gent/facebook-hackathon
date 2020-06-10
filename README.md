@@ -2,6 +2,17 @@
 
 The master branch is in production at [mental-heal](https://mental-heal.herokuapp.com/). Any development should be done in development branch.
 
+Facebook submission 
+
+1. What's your project called?
+> ?
+
+2. Here's the elevator pitch. What's your idea? This will be a short tagline for the project
+> Tackle mental health problems with a messenger bot
+
+3.It’s built with. What languages, APIs, hardware, hosts, libraries, UI Kits or frameworks are you using?
+> Built with python using the fastapi library to handle web requests, witai for NLP and the site is served with heroku.
+
 ## Competition links
 
 [messenger-comp](https://fbmessaging2.devpost.com/?ref_content=online-hackathons&ref_feature=challenge&ref_medium=facebook-channel)

@@ -12,13 +12,6 @@ class Message(BaseModel):
     quick_reply: dict
 
 
-class Read(BaseModel):
-    """
-    https://developers.facebook.com/docs/messenger-platform/reference/webhook-events/message-reads
-    """
-    watermark: int
-
-
 class Messages(BaseModel):
     """
     Mid-level model for "messages" events, meta data about message
@@ -27,8 +20,7 @@ class Messages(BaseModel):
     sender: dict # contains {"id": ".."}
     recipient: dict # contains {"id": ".."}
     timestamp: int
-    message: Optional[Message]
-    read: Optional[Read]
+    message: Message
 
 
 class WebhookEntry(BaseModel):
