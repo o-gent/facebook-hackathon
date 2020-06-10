@@ -10,7 +10,7 @@ Facebook submission
 2. Here's the elevator pitch. What's your idea? This will be a short tagline for the project
 > Tackle mental health problems with a messenger bot
 
-3.It’s built with. What languages, APIs, hardware, hosts, libraries, UI Kits or frameworks are you using?
+3. What languages, APIs, hardware, hosts, libraries, UI Kits or frameworks are you using?
 > Built with python using the fastapi library to handle web requests, witai for NLP and the site is served with heroku.
 
 ## Competition links
