@@ -3,3 +3,4 @@ uvicorn
 starlette
 h11
 websockets
+requests
