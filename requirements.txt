@@ -1,2 +1,5 @@
 fastapi
 uvicorn
+starlette
+h11
+websockets
