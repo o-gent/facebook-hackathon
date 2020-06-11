@@ -16,6 +16,7 @@ async def messenger_webhook(request: Request, response: Response):
     A webhook to return a challenge (to check our identity)
     Messenger calls this page to check our identity
     We need to use the Request object as fb has "." in its url params
+    https://developers.facebook.com/docs/messenger-platform/webhook/
     """
     verify_token: str = request.query_params.get("hub.verify_token")
     if verify_token == Config.FB_VERIFY_TOKEN:
@@ -27,17 +28,17 @@ async def messenger_webhook(request: Request, response: Response):
 
 
 @router.post("/webhook")
-async def messenger_post(object: str, entries):
+async def messenger_post(data):
     """
     Handle a messenger event
     Messenger calls this page with message data when one is sent by a user
     https://developers.facebook.com/docs/messenger-platform/reference/webhook-events/
     """
-    if object != "page":
+    if data.get("object") != "page":
         # as far as I can tell we are only interested in page events
         return "whaaa"
     
-    for entry in entries:
+    for entry in data.get("entry"):
         print(entry)
         print(entry.id)
         message = entry.messaging[0] # even though this is an array, it will only contain one value
