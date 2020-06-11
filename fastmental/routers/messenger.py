@@ -27,7 +27,7 @@ async def messenger_webhook(request: Request, response: Response):
 
 
 @router.post("/webhook")
-async def messenger_post(object: str, entries: List[WebhookEntry]):
+async def messenger_post(object: str, entries):
     """
     Handle a messenger event
     Messenger calls this page with message data when one is sent by a user
@@ -38,6 +38,7 @@ async def messenger_post(object: str, entries: List[WebhookEntry]):
         return "whaaa"
     
     for entry in entries:
+        print(entry)
         print(entry.id)
         message = entry.messaging[0] # even though this is an array, it will only contain one value
         print(message.message.text)
