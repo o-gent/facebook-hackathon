@@ -28,12 +28,14 @@ async def messenger_webhook(request: Request, response: Response):
 
 
 @router.post("/webhook")
-async def messenger_post(data):
+async def messenger_post(request: Request):
     """
     Handle a messenger event
     Messenger calls this page with message data when one is sent by a user
     https://developers.facebook.com/docs/messenger-platform/reference/webhook-events/
     """
+    data = request.json()
+
     if data.get("object") != "page":
         # as far as I can tell we are only interested in page events
         return "whaaa"
