@@ -42,6 +42,5 @@ async def messenger_post(request: Request):
     
     for entry in data.get("entry"):
         print(entry)
-        print(entry.id)
-        message = entry.messaging[0] # even though this is an array, it will only contain one value
-        print(message.message.text)
+        #message = entry.messaging[0] # even though this is an array, it will only contain one value
+        #print(message.message.text)
