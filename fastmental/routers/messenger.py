@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, Response, status
 
 from fastmental.config import Config
 from fastmental.models.messenger import WebhookEntry
@@ -10,7 +10,7 @@ router = APIRouter()
 
 
 @router.get("/webhook")
-async def messenger_webhook(request: Request):
+async def messenger_webhook(request: Request, response: Response):
     """
     A webhook to return a challenge (to check our identity)
     Messenger calls this page to check our identity
@@ -20,6 +20,7 @@ async def messenger_webhook(request: Request):
     if verify_token == Config.FB_VERIFY_TOKEN:
         return request.query_params.get("hub.challenge")
     else:
+        response.status_code = status.HTTP_401_UNAUTHORIZED
         return "Invalid Request or Verification Token"
 
 
