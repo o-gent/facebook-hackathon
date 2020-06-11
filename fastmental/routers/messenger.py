@@ -19,6 +19,7 @@ async def messenger_webhook(request: Request, response: Response):
     verify_token: str = request.query_params.get("hub.verify_token")
     if verify_token == Config.FB_VERIFY_TOKEN:
         challenge = request.query_params.get("hub.challenge")
+        print(challenge)
         return str(challenge)
     else:
         response.status_code = status.HTTP_403_FORBIDDEN
