@@ -34,7 +34,7 @@ async def messenger_post(request: Request):
     Messenger calls this page with message data when one is sent by a user
     https://developers.facebook.com/docs/messenger-platform/reference/webhook-events/
     """
-    data = request.json()
+    data = await request.json()
 
     if data.get("object") != "page":
         # as far as I can tell we are only interested in page events
