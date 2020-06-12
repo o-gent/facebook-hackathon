@@ -4,10 +4,14 @@ from fastapi import APIRouter, Request, Response, status
 from fastapi.responses import HTMLResponse
 
 from fastmental.config import Config
-from fastmental.models.messenger import WebhookEntry
+from fastmental.models.messenger import WebhookEntry, Messages
 from fastmental.response import fb_message
+from fastmental.decision import handle_message, get_people
+from fastmental.logger import setup_logger
+
 
 router = APIRouter()
+logger = setup_logger("messenger_router", "logs/messenger_router.log")
 
 
 @router.get("/webhook")
@@ -36,12 +40,29 @@ async def messenger_post(request: Request):
     """
     data = await request.json()
 
-    if data.get("object") != "page":
+    object_name = data.get("object")
+    if object_name != "page":
         # as far as I can tell we are only interested in page events
-        return "whaaa"
+        logger.info(f"recieved non papge object { object_name }")
+        return "Error"
     
-    for entry in data.get("entry"):
-        print(entry)
-        #message = entry.messaging[0] # even though this is an array, it will only contain one value
-        #print(message.message.text)
-        return "yes"
+    for rawentry in data.get("entry"):
+        logger.info(rawentry)
+
+        try:
+            entry = WebhookEntry(**rawentry)
+            item: Messages = entry.messaging[0]
+            fbid = item.sender['id']
+            # now need to handle message type specific
+            if item.message:
+                handle_message(fbid, item.message.text)
+            return "handled"
+        
+        except:
+            logger.critical("entry failed to be parsed")
+            return "malformed data"
+
+
+@router.get("/people")
+async def people():
+    return get_people()

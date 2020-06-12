@@ -1,5 +1,9 @@
 import requests
 from fastmental.config import Config
+from fastmental.logger import setup_logger
+
+
+logger = setup_logger("messenger_router", "logs/messenger_router.log")
 
 
 def fb_message(sender_id: int, text: str) -> bytes:
@@ -15,10 +19,12 @@ def fb_message(sender_id: int, text: str) -> bytes:
     # Setup the query string with your PAGE TOKEN
     qs = 'access_token=' + Config.FB_PAGE_TOKEN
     
+    logger.info(f"sending {text} to {sender_id}")
+    
     # Send POST request to messenger
     resp = requests.post(
         'https://graph.facebook.com/me/messages?' + qs,
         json=data
     )
     
-    return resp.content
+    logger.info(f"got response {resp.content}")

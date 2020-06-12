@@ -6,21 +6,31 @@ from pydantic import BaseModel
 class Message(BaseModel):
     """
     Message content
+    https://developers.facebook.com/docs/messenger-platform/reference/webhook-events/messages
     """
     mid: str
     text: str
     quick_reply: dict
 
 
+class Delivery(BaseModel):
+    """
+    Message delivery type
+    https://developers.facebook.com/docs/messenger-platform/reference/webhook-events/message-deliveries
+    """
+    mids: List[str]
+    watermark: str
+
+
 class Messages(BaseModel):
     """
     Mid-level model for "messages" events, meta data about message
-    https://developers.facebook.com/docs/messenger-platform/reference/webhook-events/messages
     """
     sender: dict # contains {"id": ".."}
     recipient: dict # contains {"id": ".."}
     timestamp: int
-    message: Message
+    message: Optional[Message]
+    delivery: Optional[Delivery]
 
 
 class WebhookEntry(BaseModel):

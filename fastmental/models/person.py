@@ -1,3 +1,6 @@
+from datetime import datetime
+from typing import Dict
+
 class Person:
     """
     Stores information about
@@ -7,7 +10,7 @@ class Person:
     
     def __init__(self, fbid: str):
         self.fbid = fbid
-        self.history = {}
+        self.history: Dict[datetime, str] = {}
         self._state = "start"
 
     def handle_message(self, text: str):
