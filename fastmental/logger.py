@@ -5,8 +5,6 @@ def setup_logger(name, log_file, level=logging.INFO):
     Creates a logger context
     """
     formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-
-    handler = logging.FileHandler(log_file)
     stream = logging.StreamHandler()
     
     handler.setFormatter(formatter)
