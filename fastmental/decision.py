@@ -6,12 +6,6 @@ from fastmental.models.person import Person
 from fastmental.response import fb_message
 from typing import Dict
 
-PEOPLE: Dict[str, Person] = {}
-STATES = {
-    'start': start,
-    'end': start
-}
-
 
 def get_people():
     return PEOPLE
@@ -38,3 +32,10 @@ def handle_message(fbid:str, message):
 
 def start(person: Person, message):
     return "Hello!"
+
+
+PEOPLE: Dict[str, Person] = {}
+STATES = {
+    'start': start,
+    'end': start
+}
