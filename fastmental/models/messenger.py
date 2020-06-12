@@ -10,7 +10,7 @@ class Message(BaseModel):
     """
     mid: str
     text: str
-    quick_reply: dict
+    quick_reply: Optional[dict]
 
 
 class Delivery(BaseModel):
@@ -38,6 +38,6 @@ class WebhookEntry(BaseModel):
     top level model for webhook events
     https://developers.facebook.com/docs/messenger-platform/reference/webhook-events/
     """
-    id: str
+    id: int
     time: int
     messaging: List[Messages] # even though this is an array, it will only contain one value

@@ -8,7 +8,7 @@ class Person:
     - message history
     """
     
-    def __init__(self, fbid: str):
+    def __init__(self, fbid: int):
         self.fbid = fbid
         self.history: Dict[datetime, str] = {}
         self._state = "start"
