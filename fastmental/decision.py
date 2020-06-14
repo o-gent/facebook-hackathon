@@ -7,6 +7,9 @@ from fastmental.response import fb_message
 from typing import Dict
 
 
+PEOPLE: Dict[int, Person] = {}
+
+
 def get_people():
     return PEOPLE
 
@@ -15,7 +18,7 @@ def handle_message(fbid:int, message:str):
     """
     first function to be called once a message has been recieved
     """
-    
+
     person = PEOPLE.get(fbid)
     if person:
         # run the corresponding state for the person
@@ -30,11 +33,22 @@ def handle_message(fbid:int, message:str):
         handle_message(fbid, message)
 
 
+def handle_delivered(fbid: int):
+    person = PEOPLE.get(fbid)
+    if person:
+        pass 
+
+
+def handle_read(fbid: int):
+    person = PEOPLE.get(fbid)
+    if person:
+        pass
+
+
 def start(person: Person, message):
     return "Hello!"
 
 
-PEOPLE: Dict[int, Person] = {}
 STATES = {
     'start': start,
     'end': start

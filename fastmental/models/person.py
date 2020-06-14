@@ -1,5 +1,11 @@
 from datetime import datetime
-from typing import Dict
+from typing import Dict, Optional, List
+
+
+class History:
+    message: str
+    send_time: datetime
+    read = Optional[datetime]
 
 class Person:
     """
@@ -10,7 +16,7 @@ class Person:
     
     def __init__(self, fbid: int):
         self.fbid = fbid
-        self.history: Dict[datetime, str] = {}
+        self.history: List[History] = []
         self._state = "start"
 
     def handle_message(self, text: str):

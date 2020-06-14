@@ -6,7 +6,7 @@ from fastapi.responses import HTMLResponse
 from fastmental.config import Config
 from fastmental.models.messenger import WebhookEntry, Messages
 from fastmental.response import fb_message
-from fastmental.decision import handle_message, get_people
+import fastmental.decision as decision
 from fastmental.logger import setup_logger
 
 
@@ -47,16 +47,22 @@ async def messenger_post(request: Request):
         return "Error"
     
     for rawentry in data.get("entry"):
-        logger.info(rawentry)
-
         try:
             entry = WebhookEntry(**rawentry)
             item: Messages = entry.messaging[0]
-            fbid = item.sender['id']
-            # now need to handle message type specific
+            fbid:int = item.sender['id']
+
+            # now need to handle specific message type
             if item.message:
-                handle_message(fbid, item.message.text)
-            return "handled"
+                decision.handle_message(fbid, item.message.text)
+
+            elif item.delivery:
+                decision.handle_delivered(fbid)
+            
+            elif item.read: 
+                decision.handle_read(fbid)
+            
+            return "handled or maybe not dunno"
         
         except:
             logger.critical("entry failed to be parsed")

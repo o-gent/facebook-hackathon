@@ -21,6 +21,12 @@ class Delivery(BaseModel):
     mids: List[str]
     watermark: str
 
+class Read(BaseModel):
+    """
+    Message delivery type
+    """
+    watermark: str
+
 
 class Messages(BaseModel):
     """
@@ -31,7 +37,7 @@ class Messages(BaseModel):
     timestamp: int
     message: Optional[Message]
     delivery: Optional[Delivery]
-
+    read: Optional[Read]
 
 class WebhookEntry(BaseModel):
     """
