@@ -15,26 +15,27 @@ wit_key_dict = {
     }
 
 class Person:
-    
+    #class to define the user    
     def __init__(self):
         self.state = "HappyOrSad"
         self.end = 'no'
-        
+      
     def run_step(self):
-        func_dict = {
-            'HappyOrSad':self.happy_or_sad(),
-            'ReasonForDistress':self.identify_reason(),
-            }
-        if self.state != 'End':
-            func_dict[self.state]
+        if self.state == 'HappyOrSad':
+            self.happy_or_sad()
+        elif self.state == 'ReasonForDistress':
+            self.identify_reason()
         else:
-            self.state = 'End'
+            self.end()
         
     def test_question_loop(self): #this loop allows for testing of the conversation internally
         while self.state != 'End':
             self.run_step()
-        else:
-            print('We from the team hope this helps, please come talk to us again if you want to!')
+        
+        print('We from the team hope this helps, please come talk to us again if you want to!')
+        
+    def end(self):
+        print('We from the team hope this helps, please come talk to us again if you want to!')
         
     def happy_or_sad(self):
         text = input('Hello, we are the mental health bot!\nPlease let me know how you are doing today?\n')
@@ -42,16 +43,17 @@ class Person:
         resp = client.get_message(text) # would actually need to be an input  
         self.answer = resp['outcomes'][0]['entities']['intent'][0]['value']
         if self.answer == 'Happy':
+            print('We are glad you are feeling good! Please come back if you ever want help with something :)')
             self.state = 'End'
         else:
             self.state = 'ReasonForDistress'
-        print(f'You are {self.answer}') #test to see what state person is currently being assessed as
+        print(f'AI response: {self.answer}') #test to see what state person is currently being assessed as
         
     def identify_reason(self):
         text = input('Oh no, I am sorry to hear that!\nCould you tell me a bit more about what is bringing you down?\n')
         client = wit_key_dict[self.state]
         resp = client.get_message(text)['outcomes'][0]['entities']['intent'][0]['value']
-        print(f'I am sorry to hear that you are {resp}')
+        print(f'AI response {resp}') #for test purposes
         self.state = 'End'
         
                 
