@@ -21,10 +21,10 @@ class Person:
 
     def handle_message(self, text: str):
         """
-        ?
+        
         """
-        # handle the metadata
-
+        # add to the history
+        
         return
     
     def handle_read(self):

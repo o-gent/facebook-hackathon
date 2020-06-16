@@ -14,42 +14,27 @@ def get_people():
     return PEOPLE
 
 
-def handle_message(fbid:int, message:str):
+def fetch_person(fbid: int) -> Person:
     """
-    first function to be called once a message has been recieved
+    Handles fetching correct person object from memory
     """
-
     person = PEOPLE.get(fbid)
     if person:
-        # run the corresponding state for the person
-        state = person.get_state()
-        statefunc = STATES[state]
-        response = statefunc(person, message)
-        fb_message(fbid, response)
-
+        return person
     else:
-        # first message from this person
         PEOPLE[fbid] = Person(fbid)
-        handle_message(fbid, message)
+        return fetch_person(fbid) 
+
+
+def handle_message(fbid:int, message:str):
+    person = fetch_person(fbid)
+    response = person.handle_message(message)
+    fb_message(fbid, response)
 
 
 def handle_delivered(fbid: int):
-    person = PEOPLE.get(fbid)
-    if person:
-        pass 
+    person = fetch_person(fbid) 
 
 
 def handle_read(fbid: int):
-    person = PEOPLE.get(fbid)
-    if person:
-        pass
-
-
-def start(person: Person, message):
-    return "Hello!"
-
-
-STATES = {
-    'start': start,
-    'end': start
-}
+    person = fetch_person(fbid)

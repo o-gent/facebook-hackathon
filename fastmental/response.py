@@ -6,7 +6,7 @@ from fastmental.logger import setup_logger
 logger = setup_logger("messenger_router", "logs/messenger_router.log")
 
 
-def fb_message(sender_id: int, text: str) -> bytes:
+def fb_message(sender_id: int, text: str):
     """
     Function for returning response to messenger
     """
@@ -26,5 +26,5 @@ def fb_message(sender_id: int, text: str) -> bytes:
         'https://graph.facebook.com/me/messages?' + qs,
         json=data
     )
-    
-    logger.info(f"got response {resp.content}")
+
+    logger.info(f"got response {str(resp.content)}")
