@@ -29,7 +29,7 @@ def handle_message(fbid:int, message:str, quick_reply: str):
     """ accept a message from a person and respond """
     person = fetch_person(fbid)
     response = person.handle_message(message)
-    fb_message(fbid, response)
+    fb_message(fbid, response, quick_replies=['🔥', '👀'])
 
 
 def handle_delivered(fbid: int):
