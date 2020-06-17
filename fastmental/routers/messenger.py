@@ -76,4 +76,4 @@ async def messenger_post(request: Request):
 
 @router.get("/people")
 async def people():
-    return get_people()
+    return people_handler.get_people()
