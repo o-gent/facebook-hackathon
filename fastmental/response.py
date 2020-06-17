@@ -14,16 +14,17 @@ def fb_message(sender_id: int, text: str, quick_replies: List[str] = []):
     :quick_replies: an optional keyword arguement
     """
 
-    # convert the quick reply options into the correct format
-    quick_reply = [{'content_type': 'text', 'title': reply} for reply in quick_replies]
-
-    data = {
+    data: dict = {
         'recipient': {'id': sender_id},
         'message': {
-            'text': text,
-            'quick_replies': quick_reply
+            'text': text
             }
     }
+
+    # convert the quick reply options into the correct format and add to the payload
+    if quick_replies != []:
+        quick_reply = [{'content_type': 'text', 'title': reply} for reply in quick_replies]
+        data['message']['quick_replies'] = quick_reply
 
     # Setup the query string with your PAGE TOKEN
     qs = 'access_token=' + Config.FB_PAGE_TOKEN
