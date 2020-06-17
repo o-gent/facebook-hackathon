@@ -6,7 +6,7 @@ from fastapi.responses import HTMLResponse
 from fastmental.config import Config
 from fastmental.models.messenger import WebhookEntry, Messages
 from fastmental.response import fb_message
-import fastmental.decision as decision
+import fastmental.people_handler as people_handler
 from fastmental.logger import setup_logger
 
 
@@ -54,13 +54,15 @@ async def messenger_post(request: Request):
 
             # now need to handle specific message type
             if item.message:
-                decision.handle_message(fbid, item.message.text)
+                quick_reply = item.message.quick_reply.get("payload", "")
+                text = item.message.text
+                people_handler.handle_message(fbid, text, quick_reply)
 
             elif item.delivery:
-                decision.handle_delivered(fbid)
+                people_handler.handle_delivered(fbid)
             
             elif item.read: 
-                decision.handle_read(fbid)
+                people_handler.handle_read(fbid)
             
             return "handled or maybe not dunno"
         

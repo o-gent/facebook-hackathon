@@ -19,16 +19,16 @@ class Person:
         self.history: List[History] = []
         self._state = "start"
 
-    def handle_message(self, text: str):
-        """
-        
-        """
+
+    def handle_message(self, text: str) -> str:
+        """ accept a text input and return a response depending on persons state """
         # add to the history
-        
-        return
+        return "Hello!"
     
+
     def handle_read(self):
         pass
+
 
     def get_state(self):
         return self._state

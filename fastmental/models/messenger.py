@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Dict
 
 from pydantic import BaseModel
 
@@ -10,7 +10,7 @@ class Message(BaseModel):
     """
     mid: str
     text: str
-    quick_reply: Optional[dict]
+    quick_reply: Dict[str] # {"payload": ""}
 
 
 class Delivery(BaseModel):
