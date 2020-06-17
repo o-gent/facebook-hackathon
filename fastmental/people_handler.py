@@ -20,7 +20,7 @@ def fetch_person(fbid: int) -> Person:
         return person
     else:
         PEOPLE[fbid] = Person(fbid)
-        return fetch_person(fbid) 
+        return fetch_person(fbid)
 
 
 def handle_message(fbid:int, message:str, quick_reply: bool):
@@ -30,7 +30,7 @@ def handle_message(fbid:int, message:str, quick_reply: bool):
     quick_reply -> if the text was a quick reply otherwise blank string
     """
     person = fetch_person(fbid)
-    response, quick_replies = person.handle_message(message, quick_reply)
+    response, quick_replies = person.run_step(message, quick_reply)
     fb_message(fbid, response, quick_replies=quick_replies)
 
 

@@ -50,7 +50,7 @@ async def messenger_post(request: Request):
         try:
             entry = WebhookEntry(**rawentry)
             item: Messages = entry.messaging[0]
-            fbid:int = item.sender['id']
+            fbid: int = item.sender['id']
 
             # now need to handle specific message type
             if item.message:
@@ -70,10 +70,10 @@ async def messenger_post(request: Request):
             return "handled or maybe not dunno"
         
         except:
-            logger.critical("entry failed to be parsed")
+            logger.critical(f"entry failed to be parsed with content {rawentry}")
             return "malformed data"
 
 
 @router.get("/people")
 async def people():
-    return get_people()
+    return people_handler.get_people()
