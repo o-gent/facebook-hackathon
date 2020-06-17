@@ -54,16 +54,8 @@ async def messenger_post(request: Request):
 
             # now need to handle specific message type
             if item.message:
-                
-                # TODO: could this be neater?
-                # if the message doesn't have a quick reply payload, this will be none
-                if item.message.quick_reply:
-                    quick_reply = item.message.quick_reply.get("payload", "")
-                else:
-                    quick_reply = ""
-
+                quick_reply = True if item.message.quick_reply else False
                 text = item.message.text
-                
                 logger.info(f"message notification from {fbid} with text: {text} and quick_response: {quick_reply}")
                 people_handler.handle_message(fbid, text, quick_reply)
 

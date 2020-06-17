@@ -14,9 +14,7 @@ def get_people():
 
 
 def fetch_person(fbid: int) -> Person:
-    """
-    Handles fetching correct person object from memory
-    """
+    """ Handles fetching correct person object from memory """
     person = PEOPLE.get(fbid)
     if person:
         return person
@@ -25,11 +23,15 @@ def fetch_person(fbid: int) -> Person:
         return fetch_person(fbid) 
 
 
-def handle_message(fbid:int, message:str, quick_reply: str):
-    """ accept a message from a person and respond """
+def handle_message(fbid:int, message:str, quick_reply: bool):
+    """ 
+    accept a message from a person and respond
+    message -> text the user sent
+    quick_reply -> if the text was a quick reply otherwise blank string
+    """
     person = fetch_person(fbid)
-    response = person.handle_message(message)
-    fb_message(fbid, response, quick_replies=['🔥', '👀'])
+    response, quick_replies = person.handle_message(message, quick_reply)
+    fb_message(fbid, response, quick_replies=quick_replies)
 
 
 def handle_delivered(fbid: int):

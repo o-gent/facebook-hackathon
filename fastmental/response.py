@@ -38,4 +38,4 @@ def fb_message(sender_id: int, text: str, quick_replies: List[str] = []):
         json=data
     )
 
-    logger.info(f"got response {str(resp.content)}")
+    logger.info(f"got message send response {str(resp.content)}")
