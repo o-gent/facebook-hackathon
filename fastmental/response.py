@@ -23,7 +23,8 @@ def fb_message(sender_id: int, text: str, quick_replies: List[str] = []):
 
     # convert the quick reply options into the correct format and add to the payload
     if quick_replies != []:
-        quick_reply = [{'content_type': 'text', 'title': reply, 'payload': 'payload_string'} for reply in quick_replies]
+        # payload is set to the same as the title, but these could be different
+        quick_reply = [{'content_type': 'text', 'title': reply, 'payload': reply} for reply in quick_replies]
         data['message']['quick_replies'] = quick_reply
 
     # Setup the query string with your PAGE TOKEN

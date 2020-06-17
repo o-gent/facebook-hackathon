@@ -64,12 +64,15 @@ async def messenger_post(request: Request):
 
                 text = item.message.text
                 
+                logger.info(f"message notification from {fbid} with text: {text} and quick_response: {quick_reply}")
                 people_handler.handle_message(fbid, text, quick_reply)
 
             elif item.delivery:
+                logger.info(f"delivery notification from {fbid}")
                 people_handler.handle_delivered(fbid)
             
-            elif item.read: 
+            elif item.read:
+                logger.info(f"read notification from {fbid}")
                 people_handler.handle_read(fbid)
             
             return "handled or maybe not dunno"
