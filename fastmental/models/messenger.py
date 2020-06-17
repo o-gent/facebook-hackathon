@@ -10,7 +10,7 @@ class Message(BaseModel):
     """
     mid: str
     text: str
-    quick_reply: Dict[str, str] # {"payload": ""}
+    quick_reply: Optional[Dict[str, str]] # {"payload": ""}
 
 
 class Delivery(BaseModel):
