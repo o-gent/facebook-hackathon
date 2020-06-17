@@ -37,8 +37,10 @@ def handle_message(fbid:int, message:str, quick_reply: bool):
 def handle_delivered(fbid: int):
     """ handles delivery event with person history """
     person = fetch_person(fbid)
+    person.handle_read()
 
 
 def handle_read(fbid: int):
     """ handles read event with person history """
     person = fetch_person(fbid)
+    person.handle_delivered()

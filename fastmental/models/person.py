@@ -30,6 +30,10 @@ class Person:
     def handle_read(self):
         pass
 
+    
+    def handle_delivered(self):
+        pass
+
 
     def get_state(self):
         return self._state
