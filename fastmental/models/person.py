@@ -69,7 +69,7 @@ class Person:
             message = f"We are glad {self.narrative} are feeling good! Please come back if {self.narrative} ever want help with something :)"
             return message, []    
         else:
-            self.set_state("ReasonForDistress")
+            self.set_state("IdentifyReason")
             message = f"Oh no, I am sorry to hear that! Could {self.narrative} tell me a bit more about what is bringing you down?"
             return message, []
     
