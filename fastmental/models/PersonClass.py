@@ -8,7 +8,7 @@ Created on Sat Jun 13 21:04:33 2020
 #create a class that will move through the 
 from wit import Wit
 
-#dictionary of all wit keys
+#dictionary of all wit keys, this needs to get updated
 wit_key_dict = {
     'HappyOrSad': Wit('UPLNVFMXPWAJATA5YMFTGXVW27JR6EZN'),
     'ReasonForDistress' : Wit('65ZE46TD7DCBJX3KK5GZAXQSWFO3F3K7'),
@@ -17,47 +17,62 @@ wit_key_dict = {
 class Person:
     #class to define the user    
     def __init__(self):
-        self.state = "HappyOrSad"
+        self.state = "start"
         self.end = 'no'
-      
-    def run_step(self):
-        if self.state == 'HappyOrSad':
-            self.happy_or_sad()
+        self.ind = 'you'
+        #self.text = '' # this is the text varia
+        
+    def welcome(self): #always run on start of new class
+        print('Hello and welcome to the mental health bot!\nWe aim to help solve any issues you or a friend may have.\n Are you asking for a friend or yourself?', ['Myself','Friend'])
+        return 'Hello and welcome to the mental health bot!\nWe aim to help solve any issues you or a friend may have.\n Are you asking for a friend or yourself?', ['Myself','Friend']
+        
+    
+    def run_step(self,text:str):
+        if self.state == 'start':
+            self.how_are_you(text)
+        elif self.state == 'HappyOrSad':
+            self.happy_or_sad(text)
         elif self.state == 'ReasonForDistress':
-            self.identify_reason()
+            self.identify_reason(text)
+
+            
+    def how_are_you(self,text):
+        self.state = 'HappyOrSad'
+        if text == 'Myself':
+            self.ind = 'you'
+            # return 'How are you doing today?'
         else:
-            self.end()
+            self.ind = 'they'
+        return f'How are {self.ind} doing today?'
         
-    def test_question_loop(self): #this loop allows for testing of the conversation internally
-        while self.state != 'End':
-            self.run_step()
         
-        print('We from the team hope this helps, please come talk to us again if you want to!')
         
+        #print('We from the team hope this helps, please come talk to us again if you want to!')
+    #to be run at any point that the bot reaches the end    
     def end(self):
-        print('We from the team hope this helps, please come talk to us again if you want to!')
+        self.state = "start"
+        self.end = 'no'
+        self.ind = 'you'
+        return('We from the team hope this helps, please come talk to us again if you want to!')
         
-    def happy_or_sad(self):
-        text = input('Hello, we are the mental health bot!\nPlease let me know how you are doing today?\n')
+
+        
+    def happy_or_sad(self,text:str):
         client = wit_key_dict[self.state]
         resp = client.get_message(text) # would actually need to be an input  
         self.answer = resp['outcomes'][0]['entities']['intent'][0]['value']
         if self.answer == 'Happy':
-            print('We are glad you are feeling good! Please come back if you ever want help with something :)')
-            self.state = 'End'
+            self.state='end'
+            return(f'We are glad {self.ind} are feeling good! Please come back if {self.ind} ever want help with something :)')
+            
         else:
             self.state = 'ReasonForDistress'
-        print(f'AI response: {self.answer}') #test to see what state person is currently being assessed as
+  
+            return f'Oh no, I am sorry to hear that!\nCould {self.ind} tell me a bit more about what is bringing you down?\n'
+       
         
-    def identify_reason(self):
-        text = input('Oh no, I am sorry to hear that!\nCould you tell me a bit more about what is bringing you down?\n')
+    def identify_reason(self,text):
         client = wit_key_dict[self.state]
         resp = client.get_message(text)['outcomes'][0]['entities']['intent'][0]['value']
-        print(f'AI response {resp}') #for test purposes
-        self.state = 'End'
-        
-                
-        
-
-denis = Person()
-denis.test_question_loop()
+        self.state=resp
+        return f'Could {self.ind} tell me what is causing one to be {resp}'
