@@ -141,4 +141,9 @@ class Person:
         """ shorcut for wit response """
         client = wit_key_dict[self.state]
         response = client.get_message(text)
-        return response['outcomes'][0]['entities']['intent'][0]['value']
+        try:
+            value = response['outcomes'][0]['entities']['intent'][0]['value']
+        except:
+            value = "wit error"
+            logger.info(response)
+        return value
