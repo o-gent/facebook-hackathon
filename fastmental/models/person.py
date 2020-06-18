@@ -15,10 +15,10 @@ logger = setup_logger("person", "logs/person.log")
 wit_key_dict = {
     'HappyOrSad': Wit('UPLNVFMXPWAJATA5YMFTGXVW27JR6EZN'),
     'IdentifyReason' : Wit('65ZE46TD7DCBJX3KK5GZAXQSWFO3F3K7'),
-    '': Wit('SVZ7IY777CEY3FG4GOWYUO5MO3YMGR7Q'),
+    'Stressed': Wit('SVZ7IY777CEY3FG4GOWYUO5MO3YMGR7Q'),
 }
 
-#use the keys from the outcomes to give suggestions. Allows for easy expansion of suggestions without editing code
+# use the keys from the outcomes to give suggestions. Allows for easy expansion of suggestions without editing code
 advice_dict = {'PoorSleep':'Try and create an evening routine, stop doing work by a certain time, avoid looking at bright lights or screens an hour before bed. Take time to wind down before, this might be reading a book, listening to music, or even creating a plan/to do list if this helps you get ideas down on paper.',
                'PoorFood':'Take time out of your day to have breakfast, lunch and dinner. Try to reduce over snacking or eating quick bites to eat as these are not as satisfying and will reduce the quality of your diet',
                'StressLonely':'Plan activities with your loved ones. Even if it’s just an hour a week, it’s really important to create a balance. Having a planned activity- e.g. cooking your favourite food together- will create something to look forward to, and reduce the likelihood that you’ll run out of time.',
@@ -94,7 +94,7 @@ class Person:
         """ """
         response = self._get_wit_value(text)
         self.set_state(response)
-        message = f"Could {self.narrative} tell me what is causing one to be {response}" 
+        message = f"Could {self.narrative} tell me what is causing one to be {response}?" 
         return message, []
     
 
