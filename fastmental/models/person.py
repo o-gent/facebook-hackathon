@@ -9,7 +9,7 @@ from fastmental.logger import setup_logger
 logger = setup_logger("person", "logs/person.log")
 wit_key_dict = {
     'HappyOrSad': Wit('UPLNVFMXPWAJATA5YMFTGXVW27JR6EZN'),
-    'ReasonForDistress' : Wit('65ZE46TD7DCBJX3KK5GZAXQSWFO3F3K7'),
+    'IdentifyReason' : Wit('65ZE46TD7DCBJX3KK5GZAXQSWFO3F3K7'),
 }
 
 
