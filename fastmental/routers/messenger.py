@@ -2,6 +2,7 @@ from typing import List, Optional
 
 from fastapi import APIRouter, Request, Response, status
 from fastapi.responses import HTMLResponse
+import pydantic
 
 from fastmental.config import Config
 from fastmental.models.messenger import WebhookEntry, Messages
@@ -69,7 +70,7 @@ async def messenger_post(request: Request):
             
             return "handled or maybe not dunno"
         
-        except:
+        except pydantic.ValidationError:
             logger.critical(f"entry failed to be parsed with content {rawentry}")
             return "malformed data"
 

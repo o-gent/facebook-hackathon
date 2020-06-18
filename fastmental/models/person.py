@@ -14,7 +14,7 @@ from fastmental.logger import setup_logger
 logger = setup_logger("person", "logs/person.log")
 wit_key_dict = {
     'HappyOrSad': Wit('UPLNVFMXPWAJATA5YMFTGXVW27JR6EZN'),
-    'ReasonForDistress' : Wit('65ZE46TD7DCBJX3KK5GZAXQSWFO3F3K7'),
+    'IdentifyReason' : Wit('65ZE46TD7DCBJX3KK5GZAXQSWFO3F3K7'),
     '': Wit('SVZ7IY777CEY3FG4GOWYUO5MO3YMGR7Q'),
 }
 
@@ -85,7 +85,7 @@ class Person:
             message = f"We are glad {self.narrative} are feeling good! Please come back if {self.narrative} ever want help with something :)"
             return message, []    
         else:
-            self.set_state("ReasonForDistress")
+            self.set_state("IdentifyReason")
             message = f"Oh no, I am sorry to hear that! Could {self.narrative} tell me a bit more about what is bringing you down?"
             return message, []
     
