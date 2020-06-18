@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+"""
+Person class
+"""
+
 from datetime import datetime
 from typing import Dict, List, Optional, Tuple
 
@@ -10,8 +15,18 @@ logger = setup_logger("person", "logs/person.log")
 wit_key_dict = {
     'HappyOrSad': Wit('UPLNVFMXPWAJATA5YMFTGXVW27JR6EZN'),
     'IdentifyReason' : Wit('65ZE46TD7DCBJX3KK5GZAXQSWFO3F3K7'),
+    '': Wit('SVZ7IY777CEY3FG4GOWYUO5MO3YMGR7Q'),
 }
 
+#use the keys from the outcomes to give suggestions. Allows for easy expansion of suggestions without editing code
+advice_dict = {'PoorSleep':'Try and create an evening routine, stop doing work by a certain time, avoid looking at bright lights or screens an hour before bed. Take time to wind down before, this might be reading a book, listening to music, or even creating a plan/to do list if this helps you get ideas down on paper.',
+               'PoorFood':'Take time out of your day to have breakfast, lunch and dinner. Try to reduce over snacking or eating quick bites to eat as these are not as satisfying and will reduce the quality of your diet',
+               'StressLonely':'Plan activities with your loved ones. Even if it’s just an hour a week, it’s really important to create a balance. Having a planned activity- e.g. cooking your favourite food together- will create something to look forward to, and reduce the likelihood that you’ll run out of time.',
+               'Irritable':'Try some relaxation techniques such as square breathing. Breath in for 4 seconds, hold for 4 seconds, breath out for 4 seconds, hold for 4 seconds.',
+               'NoTime':'Speak to your manager or supervisor about your workload. Try a new way to prioritise your work. If you find you continually work overtime, perhaps try to manage your time differently.',
+               'PoorWork':'Make sure you’re taking breaks to break up your day, this can reduce stress and boost productivity. ',
+               'StressDepression':'Try reaching out to close family or friends. ',
+               }
 
 class History:
     """ format for storing message history """
@@ -37,6 +52,7 @@ class Person:
         if self.state == "HowAreYou":       return self.how_are_you(text, quick_reply)
         if self.state == 'HappyOrSad':      return self.happy_or_sad(text)
         if self.state == 'IdentifyReason':  return self.identify_reason(text)
+        if self.state == 'Stressed':        return self.identify_stress(text)
         return "We encountered an error!", []
 
 
@@ -56,7 +72,7 @@ class Person:
             return f"How are {self.narrative} doing today?", []
         else:
             # they didn't answer with a quick reply.. so stay in the same state
-            message = f"Could you reply with the quick reply options? Thank you!"
+            message = "Could you reply with the quick reply options? Thank you!"
             return message, ["Myself","Friend"]
         
 
@@ -79,6 +95,13 @@ class Person:
         response = self._get_wit_value(text)
         self.set_state(response)
         message = f"Could {self.narrative} tell me what is causing one to be {response}" 
+        return message, []
+    
+    def identify_stress(self, text:str):
+        """Used to identify stress and define response"""
+        response = self.get_wit_value(text)
+        self.set_state('end')
+        message = f'Advice for {self.narrative}: ' + advice_dict[response]
         return message, []
     
 
