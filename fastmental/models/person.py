@@ -97,9 +97,10 @@ class Person:
         message = f"Could {self.narrative} tell me what is causing one to be {response}" 
         return message, []
     
+
     def identify_stress(self, text:str):
         """Used to identify stress and define response"""
-        response = self.get_wit_value(text)
+        response = self._get_wit_value(text)
         self.set_state('end')
         message = f'Advice for {self.narrative}: ' + advice_dict[response]
         return message, []
