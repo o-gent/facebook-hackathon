@@ -1,78 +1,120 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Jun 13 21:04:33 2020
+from datetime import datetime
+from typing import Dict, List, Optional, Tuple
 
-@author: denis
-"""
-
-#create a class that will move through the 
 from wit import Wit
 
-#dictionary of all wit keys, this needs to get updated
+from fastmental.logger import setup_logger
+
+
+logger = setup_logger("person", "logs/person.log")
 wit_key_dict = {
     'HappyOrSad': Wit('UPLNVFMXPWAJATA5YMFTGXVW27JR6EZN'),
     'ReasonForDistress' : Wit('65ZE46TD7DCBJX3KK5GZAXQSWFO3F3K7'),
-    }
+}
+
+
+class History:
+    """ format for storing message history """
+    message: str
+    send_time: datetime
+    read = Optional[datetime]
+
 
 class Person:
-    #class to define the user    
-    def __init__(self):
-        self.state = "start"
-        self.end = 'no'
-        self.ind = 'you'
-        #self.text = '' # this is the text varia
-        
-    def welcome(self): #always run on start of new class
-        print('Hello and welcome to the mental health bot!\nWe aim to help solve any issues you or a friend may have.\n Are you asking for a friend or yourself?', ['Myself','Friend'])
-        return 'Hello and welcome to the mental health bot!\nWe aim to help solve any issues you or a friend may have.\n Are you asking for a friend or yourself?', ['Myself','Friend']
+    """ Stores all information about a user and handles questions and answers """
+
+    def __init__(self, fbid: int):
+        self.fbid = fbid
+        self.state = "welcome"
+        self.narrative = "you"
+        self.history: List[History] = []
+        logger.info(f"{fbid} object has been created")
         
     
-    def run_step(self,text:str):
-        if self.state == 'start':
-            self.how_are_you(text)
-        elif self.state == 'HappyOrSad':
-            self.happy_or_sad(text)
-        elif self.state == 'ReasonForDistress':
-            self.identify_reason(text)
+    def run_step(self, text: str, quick_reply: bool) -> Tuple[str, List[str]]:
+        """ accept a text input and return a response depending on persons state """
+        if self.state == "welcome":         return self.welcome()
+        if self.state == "HowAreYou":       return self.how_are_you(text, quick_reply)
+        if self.state == 'HappyOrSad':      return self.happy_or_sad(text)
+        if self.state == 'IdentifyReason':  return self.identify_reason(text)
+        return "We encountered an error!", []
 
-            
-    def how_are_you(self,text):
-        self.state = 'HappyOrSad'
-        if text == 'Myself':
-            self.ind = 'you'
-            # return 'How are you doing today?'
+
+    def welcome(self):
+        """ greeting when person starts the conversation """
+        quick_reply = ['Myself','Friend']
+        text = "Hello and welcome to the mental health bot! We aim to help solve any issues you or a friend may have. Are you asking for a friend or yourself?"
+        self.set_state("HowAreYou")
+        return text, quick_reply
+
+
+    def how_are_you(self, text: str, quick_reply: bool):
+        """ Determine how they are feeling """
+        if quick_reply:
+            self.narrative = "you" if text == "Myself" else "they"
+            self.set_state("HappyOrSad")
+            return f"How are {self.narrative} doing today?", []
         else:
-            self.ind = 'they'
-        return f'How are {self.ind} doing today?'
+            # they didn't answer with a quick reply.. so stay in the same state
+            message = f"Could you reply with the quick reply options? Thank you!"
+            return message, ["Myself","Friend"]
         
-        
-        
-        #print('We from the team hope this helps, please come talk to us again if you want to!')
-    #to be run at any point that the bot reaches the end    
+
+    def happy_or_sad(self, text:str):
+        """ Determine what the issue is if they are sad """
+        response = self._get_wit_value(text)
+
+        if response == "Happy":
+            self.set_state("end")
+            message = f"We are glad {self.narrative} are feeling good! Please come back if {self.narrative} ever want help with something :)"
+            return message, []    
+        else:
+            self.set_state("ReasonForDistress")
+            message = f"Oh no, I am sorry to hear that! Could {self.narrative} tell me a bit more about what is bringing you down?"
+            return message, []
+    
+
+    def identify_reason(self, text: str):
+        """ """
+        response = self._get_wit_value(text)
+        self.set_state(response)
+        message = f"Could {self.narrative} tell me what is causing one to be {response}" 
+        return message, []
+    
+
     def end(self):
-        self.state = "start"
-        self.end = 'no'
-        self.ind = 'you'
-        return('We from the team hope this helps, please come talk to us again if you want to!')
-        
+        """ 
+        To be run at any point that the bot reaches the end 
+        handle setup for the next run
+        """
+        self.set_state("start")
+        self.narrative = "you"
+        return "The team hope this helps, please come talk to us again if you want to!", []
+    
 
-        
-    def happy_or_sad(self,text:str):
+    def set_state(self, state: str):
+        """ setter for state """
+        self.state = state
+        logger.info(f"{self.fbid}'s' state changed to {state}")
+    
+    
+    def get_state(self):
+        """ getter for state """
+        return self.state 
+
+
+    def handle_read(self):
+        """ make note of read event """
+        pass
+
+    
+    def handle_delivered(self):
+        """ make note of delivered event """
+        pass
+    
+    
+    def _get_wit_value(self, text: str) -> str:
+        """ shorcut for wit response """
         client = wit_key_dict[self.state]
-        resp = client.get_message(text) # would actually need to be an input  
-        self.answer = resp['outcomes'][0]['entities']['intent'][0]['value']
-        if self.answer == 'Happy':
-            self.state='end'
-            return(f'We are glad {self.ind} are feeling good! Please come back if {self.ind} ever want help with something :)')
-            
-        else:
-            self.state = 'ReasonForDistress'
-  
-            return f'Oh no, I am sorry to hear that!\nCould {self.ind} tell me a bit more about what is bringing you down?\n'
-       
-        
-    def identify_reason(self,text):
-        client = wit_key_dict[self.state]
-        resp = client.get_message(text)['outcomes'][0]['entities']['intent'][0]['value']
-        self.state=resp
-        return f'Could {self.ind} tell me what is causing one to be {resp}'
+        response = client.get_message(text)
+        return response['outcomes'][0]['entities']['intent'][0]['value']
