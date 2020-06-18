@@ -5,3 +5,4 @@ h11
 websockets
 requests
 gunicorn
+pywit
