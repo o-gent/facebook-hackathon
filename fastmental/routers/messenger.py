@@ -7,8 +7,8 @@ import pydantic
 from fastmental.config import Config
 from fastmental.models.messenger import WebhookEntry, Messages
 from fastmental.response import fb_message
-import fastmental.people_handler as people_handler
 from fastmental.logger import setup_logger
+import fastmental.people_handler as people_handler
 
 
 router = APIRouter()
@@ -73,8 +73,3 @@ async def messenger_post(request: Request):
         except pydantic.ValidationError:
             logger.critical(f"entry failed to be parsed with content {rawentry}")
             return "malformed data"
-
-
-@router.get("/people")
-async def people():
-    return people_handler.get_people()
