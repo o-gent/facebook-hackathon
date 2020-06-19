@@ -132,7 +132,7 @@ class Person:
         To be run at any point that the bot reaches the end 
         handle setup for the next run
         """
-        self.set_state("rate")
+        self.set_state("rating")
         self.narrative = "you"
         # this can be two messages once the functionality exists
         message = "The team hope this helps, please come talk to us again if you want to! Also let us know what you throught about the conversation by leaving a rating!"
@@ -187,7 +187,3 @@ class Person:
                 value = ""
         
         return value
-    
-
-    def __repr__(self):
-        return self.history
