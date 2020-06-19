@@ -42,6 +42,11 @@ Facebook submission
 
 ---
 
+## Setup
+
+following env variables must be set
+- WEB_CONCURRENCY=1
+
 ### High level concept
 
 Q1: How are you doing?

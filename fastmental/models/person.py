@@ -102,7 +102,7 @@ class Person:
         """Used to identify stress and define response"""
         response = self._get_wit_value(text)
         self.set_state('end')
-        message = f'Advice for {self.narrative}: ' + advice_dict[response]
+        message = f'Advice for {self.narrative}: ' + advice_dict.get(response, "wit error :(")
         return message, []
     
 
@@ -141,9 +141,16 @@ class Person:
         """ shorcut for wit response """
         client = wit_key_dict[self.state]
         response = client.get_message(text)
+        
         try:
+            # old version format
             value = response['outcomes'][0]['entities']['intent'][0]['value']
         except:
-            value = "wit error"
-            logger.info(response)
+            try:
+                # new version format
+                value = response['outcomes'][0]['intent']
+            except:
+                logger.info(f"got wit response error {response}")
+                value = ""
+        
         return value
