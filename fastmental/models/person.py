@@ -68,7 +68,7 @@ class Person:
     def record(self, text: str):
         """ records responses for each user session """
         # we need a way of recording which route they took
-        if self.history.get(self.session):
+        if self.history.get(self.session) != None:
             self.history[self.session][self.get_state()] = (text, datetime.now()) 
         else:
             # new session
