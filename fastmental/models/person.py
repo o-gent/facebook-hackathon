@@ -42,18 +42,38 @@ class Person:
         self.fbid = fbid
         self.state = "welcome"
         self.narrative = "you"
-        self.history: List[History] = []
+        self.history: Dict[int, Dict[str, Tuple[str, datetime]]] = {}
+        self.session: int = 0 # keeps track of how many times the user has used the bot
         logger.info(f"{fbid} object has been created")
         
     
     def run_step(self, text: str, quick_reply: bool) -> Tuple[str, List[str]]:
         """ accept a text input and return a response depending on persons state """
+        # Add responses for states to history
+        self.record(text)
+
+        # direct to the correct function
         if self.state == "welcome":         return self.welcome()
         if self.state == "HowAreYou":       return self.how_are_you(text, quick_reply)
-        if self.state == 'HappyOrSad':      return self.happy_or_sad(text)
-        if self.state == 'IdentifyReason':  return self.identify_reason(text)
-        if self.state == 'Stressed':        return self.identify_stress(text)
+        if self.state == "HappyOrSad":      return self.happy_or_sad(text)
+        if self.state == "IdentifyReason":  return self.identify_reason(text)
+        if self.state == "Stressed":        return self.identify_stress(text)
+        if self.state == "end":             return self.end()
+        if self.state == "rating":          return self.rating(text, quick_reply)
+        
+        # a function directed to a state that doesn't exist
         return "We encountered an error!", []
+    
+
+    def record(self, text: str):
+        """ records responses for each user session """
+        # we need a way of recording which route they took
+        if self.history.get(self.session):
+            self.history[self.session][self.get_state()] = (text, datetime.now()) 
+        else:
+            # new session
+            self.history[self.session] = {}
+            self.record(text)
 
 
     def welcome(self):
@@ -102,18 +122,31 @@ class Person:
         """Used to identify stress and define response"""
         response = self._get_wit_value(text)
         self.set_state('end')
-        message = f'Advice for {self.narrative}: ' + advice_dict.get(response, "wit error :(")
-        return message, []
-    
+        message = f"Advice for {self.narrative}: " + advice_dict.get(response, "wit error :(")
+        message2 = "What do you think of this? Would this help?"
+        return message, ["Yes", "No :("]
+
 
     def end(self):
         """ 
         To be run at any point that the bot reaches the end 
         handle setup for the next run
         """
-        self.set_state("start")
+        self.set_state("rate")
         self.narrative = "you"
-        return "The team hope this helps, please come talk to us again if you want to!", []
+        # this can be two messages once the functionality exists
+        message = "The team hope this helps, please come talk to us again if you want to! Also let us know what you throught about the conversation by leaving a rating!"
+        return message, ['1', '2', '3', '4', '5']
+    
+
+    def rating(self, text: str, quick_reply: bool):
+        """ rate the user experiance at the end of the conversation """
+        self.set_state("welcome")
+        # do something with the rating
+
+        message = "Thank you for the rating!"
+        return message, []
+
     
 
     def set_state(self, state: str):
@@ -154,3 +187,7 @@ class Person:
                 value = ""
         
         return value
+    
+
+    def __repr__(self):
+        return self.history
