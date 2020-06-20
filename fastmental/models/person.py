@@ -19,14 +19,24 @@ wit_key_dict = {
 }
 
 # use the keys from the outcomes to give suggestions. Allows for easy expansion of suggestions without editing code
-advice_dict = {'PoorSleep':'Try and create an evening routine, stop doing work by a certain time, avoid looking at bright lights or screens an hour before bed. Take time to wind down before, this might be reading a book, listening to music, or even creating a plan/to do list if this helps you get ideas down on paper.',
-               'PoorFood':'Take time out of your day to have breakfast, lunch and dinner. Try to reduce over snacking or eating quick bites to eat as these are not as satisfying and will reduce the quality of your diet',
-               'StressLonely':'Plan activities with your loved ones. Even if it’s just an hour a week, it’s really important to create a balance. Having a planned activity- e.g. cooking your favourite food together- will create something to look forward to, and reduce the likelihood that you’ll run out of time.',
-               'Irritable':'Try some relaxation techniques such as square breathing. Breath in for 4 seconds, hold for 4 seconds, breath out for 4 seconds, hold for 4 seconds.',
-               'NoTime':'Speak to your manager or supervisor about your workload. Try a new way to prioritise your work. If you find you continually work overtime, perhaps try to manage your time differently.',
-               'PoorWork':'Make sure you’re taking breaks to break up your day, this can reduce stress and boost productivity. ',
-               'StressDepression':'Try reaching out to close family or friends. ',
-               }
+advice_dict = {
+    'PoorSleep':'Try and create an evening routine, stop doing work by a certain time, avoid looking at bright lights or screens an hour before bed. Take time to wind down before, this might be reading a book, listening to music, or even creating a plan/to do list if this helps you get ideas down on paper.',
+    'PoorFood':'Take time out of your day to have breakfast, lunch and dinner. Try to reduce over snacking or eating quick bites to eat as these are not as satisfying and will reduce the quality of your diet',
+    'StressLonely':'Plan activities with your loved ones. Even if it’s just an hour a week, it’s really important to create a balance. Having a planned activity- e.g. cooking your favourite food together- will create something to look forward to, and reduce the likelihood that you’ll run out of time.',
+    'Irritable':'Try some relaxation techniques such as square breathing. Breath in for 4 seconds, hold for 4 seconds, breath out for 4 seconds, hold for 4 seconds.',
+    'NoTime':'Speak to your manager or supervisor about your workload. Try a new way to prioritise your work. If you find you continually work overtime, perhaps try to manage your time differently.',
+    'PoorWork':'Make sure you’re taking breaks to break up your day, this can reduce stress and boost productivity. ',
+    'StressDepression':'Try reaching out to close family or friends. ',
+}
+
+
+class WitNotFound(Exception):
+    pass
+
+
+class WitError(Exception):
+    pass
+
 
 class History:
     """ format for storing message history """
@@ -47,7 +57,7 @@ class Person:
         logger.info(f"{fbid} object has been created")
         
     
-    def run_step(self, text: str, quick_reply: bool) -> Tuple[str, List[str]]:
+    def run_step(self, text: str, quick_reply: bool) -> Tuple[List[str], List[str]]:
         """ accept a text input and return a response depending on persons state """
         # Add responses for states to history
         self.record(text)
@@ -62,7 +72,7 @@ class Person:
         if self.state == "rating":          return self.rating(text, quick_reply)
         
         # a function directed to a state that doesn't exist
-        return "We encountered an error!", []
+        return ["We encountered an error!"], []
     
 
     def record(self, text: str):
@@ -79,9 +89,9 @@ class Person:
     def welcome(self):
         """ greeting when person starts the conversation """
         quick_reply = ['Myself','Friend']
-        text = "Hello and welcome to the mental health bot! We aim to help solve any issues you or a friend may have. Are you asking for a friend or yourself?"
+        message = "Hello and welcome to the mental health bot! We aim to help solve any issues you or a friend may have. Are you asking for a friend or yourself?"
         self.set_state("HowAreYou")
-        return text, quick_reply
+        return [message], quick_reply
 
 
     def how_are_you(self, text: str, quick_reply: bool):
@@ -93,7 +103,7 @@ class Person:
         else:
             # they didn't answer with a quick reply.. so stay in the same state
             message = "Could you reply with the quick reply options? Thank you!"
-            return message, ["Myself","Friend"]
+            return [message], ["Myself","Friend"]
         
 
     def happy_or_sad(self, text:str):
@@ -103,11 +113,11 @@ class Person:
         if response == "Happy":
             self.set_state("end")
             message = f"We are glad {self.narrative} are feeling good! Please come back if {self.narrative} ever want help with something :)"
-            return message, []    
+            return [message], []    
         else:
             self.set_state("IdentifyReason")
             message = f"Oh no, I am sorry to hear that! Could {self.narrative} tell me a bit more about what is bringing you down?"
-            return message, []
+            return [message], []
     
 
     def identify_reason(self, text: str):
@@ -115,16 +125,21 @@ class Person:
         response = self._get_wit_value(text)
         self.set_state(response)
         message = f"Could {self.narrative} tell me what is causing one to be {response}?" 
-        return message, []
+        return [message], []
     
 
     def identify_stress(self, text:str):
         """Used to identify stress and define response"""
-        response = self._get_wit_value(text)
-        self.set_state('end')
-        message = f"Advice for {self.narrative}: " + advice_dict.get(response, "wit error :(")
-        message2 = "What do you think of this? Would this help?"
-        return message, ["Yes", "No :("]
+        try:
+            response = self._get_wit_value(text)
+            self.set_state('end')
+            message = f"Advice for {self.narrative}: " + advice_dict.get(response, "wit error :(")
+            message2 = "What do you think of this? Would this help?"
+            return [message, message2], ["Yes", "No :("]
+        except:
+            # we need to ask again
+            message = "We didn't understand that.. could you explain it in a different way?"
+            return [message], []
 
 
     def end(self):
@@ -136,7 +151,7 @@ class Person:
         self.narrative = "you"
         # this can be two messages once the functionality exists
         message = "The team hope this helps, please come talk to us again if you want to! Also let us know what you throught about the conversation by leaving a rating!"
-        return message, ['1', '2', '3', '4', '5']
+        return [message], ['1', '2', '3', '4', '5']
     
 
     def rating(self, text: str, quick_reply: bool):
@@ -145,7 +160,7 @@ class Person:
         # do something with the rating
 
         message = "Thank you for the rating!"
-        return message, []
+        return [message], []
 
     
 
@@ -171,19 +186,22 @@ class Person:
     
     
     def _get_wit_value(self, text: str) -> str:
-        """ shorcut for wit response """
+        """ 
+        shorcut for wit response 
+        Raises:
+            WitNotFound
+            WitError
+        """
         client = wit_key_dict[self.state]
         response = client.get_message(text)
         
         try:
-            # old version format
-            value = response['outcomes'][0]['entities']['intent'][0]['value']
+            if response['outcomes'][0].get('entities') != {} or None:
+                value = response['outcomes'][0]['entities']['intent'][0]['value']
+                return value
+            else:
+                # wit couldn't identify an entity
+                raise WitNotFound()
         except:
-            try:
-                # new version format
-                value = response['outcomes'][0]['intent']
-            except:
-                logger.info(f"got wit response error {response}")
-                value = ""
-        
-        return value
+            logger.info(f"got wit response error {response}")
+            raise WitError()
