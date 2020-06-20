@@ -8,14 +8,10 @@ from fastmental.logger import setup_logger
 logger = setup_logger("messenger_router", "logs/messenger_router.log")
 
 
-def fb_message(sender_id: int, text: str or List[str], quick_replies: List[str] = []):
+def fb_message(sender_id: int, text: List[str], quick_replies: List[str]):
     """
     Function for returning response to messenger
-    :quick_replies: an optional keyword arguement. Only sends after last argument
     """
-
-    if type(text) is str:
-	text=[text]
 
     idx=0
     while idx<len(text):
@@ -46,7 +42,7 @@ def fb_message(sender_id: int, text: str or List[str], quick_replies: List[str] 
             json=data
         )
 
-	if resp['message_id'] !="":
+	if resp.get('message_id') != None:
 	    idx+=1
 
         logger.info(f"got message send response {str(resp.content)}")
