@@ -61,12 +61,16 @@ async def messenger_post(request: Request):
                 people_handler.handle_message(fbid, text, quick_reply)
 
             elif item.delivery:
-                logger.info(f"delivery notification from {fbid}")
                 people_handler.handle_delivered(fbid)
             
             elif item.read:
-                logger.info(f"read notification from {fbid}")
                 people_handler.handle_read(fbid)
+            
+            elif item.optin:
+                people_handler.handle_optin(fbid, item.optin.one_time_notif_token)
+            
+            else:
+                logger.info(f"unknown option: {rawentry}")
             
             return "handled or maybe not dunno"
         

@@ -21,11 +21,18 @@ class Delivery(BaseModel):
     mids: List[str]
     watermark: str
 
+
 class Read(BaseModel):
     """
     Message delivery type
     """
     watermark: str
+
+
+class Optin(BaseModel):
+    type: str
+    payload: str
+    one_time_notif_token: str
 
 
 class Messages(BaseModel):
@@ -38,6 +45,8 @@ class Messages(BaseModel):
     message: Optional[Message]
     delivery: Optional[Delivery]
     read: Optional[Read]
+    optin: Optional[Optin]
+
 
 class WebhookEntry(BaseModel):
     """

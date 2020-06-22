@@ -2,7 +2,7 @@ from typing import Dict
 
 from fastmental.logger import setup_logger
 from fastmental.models.person import Person
-from fastmental.response import fb_message
+from fastmental.response import fb_message, one_time_message
 
 
 logger = setup_logger("people_handler", "logs/people_handler.log")
@@ -44,3 +44,8 @@ def handle_read(fbid: int):
     """ handles read event with person history """
     person = fetch_person(fbid)
     person.handle_delivered()
+
+
+def handle_optin(fbid: int, optin_token: str):
+    person = fetch_person(fbid)
+    person.handle_one_time(optin_token)

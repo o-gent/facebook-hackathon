@@ -1,0 +1,181 @@
+{
+    
+    "PoorSleep": {
+        "serious": [
+            "The men’s health forum offers 24/7 stress support by text, chat and email. Visit www.menshealthforum.org.uk for more information",
+            "You can also talk to your GP about how you’re feeling. They can offer further advice or refer you to IAPT ",
+            "You can self refer IAPT: Improving access to Psychological Therapies, which will help with anxiety and depression using Psychological therapies. https://www.nhs.uk/service-search/find-a-psychological-therapies-service/",
+            "If you’ve been diagnosed with anxiety, you can access support from Anxiety UK. Call on 03444 775 774 or visit www.anxietyuk.org.uk"
+        ],
+        "advice": [
+            {
+                "weight": 1,
+                "advice": "Try and create an evening routine, stop doing work by a certain time, avoid looking at bright lights or screens an hour before bed. Take time to wind down before, this might be reading a book, listening to music, or even creating a plan/to do list if this helps you get ideas down on paper.",
+                "external": "Website for creating a plan?"
+            },
+            {
+                "weight": 1,
+                "advice": "If possible, try to avoid napping during the day and avoid drinking caffeinated drinks too close to bedtime.",
+                "external": "Suggestions of different uncaffinated drinks to try?"
+            },
+            {
+                "weight": 1,
+                "advice": "Make sure you have a quiet and peaceful environment, it’s ideal if you can leave work based things in a different room to the one you sleep in but failing that keep things at a desk rather than working in bed",
+                "external": ""
+            },
+            {
+                "weight": 1,
+                "advice": "Exercise can often help with sleep. Find what works for you, it might be that gentle exercise in the evening will help you settle down.",
+                "external": "Try the https://www.strava.com/ app to keep track of exercise and keep motivation up"
+            },
+            {
+                "weight": 1,
+                "advice": "If you’re feeling restless when trying to sleep, try something that you find relaxing, such as reading a book or listening to music.",
+                "external": "Podcasts suggestions?"
+            }
+        ]
+    },
+
+    "PoorFood": {
+        "serious": [
+            "The men’s health forum offers 24/7 stress support by text, chat and email. Visit www.menshealthforum.org.uk for more information",
+            "You can also talk to your GP about how you’re feeling. They can offer further advice or refer you to IAPT ",
+            "You can self refer IAPT: Improving access to Psychological Therapies, which will help with anxiety and depression using Psychological therapies. https://www.nhs.uk/service-search/find-a-psychological-therapies-service/",
+            "If you’ve been diagnosed with anxiety, you can access support from Anxiety UK. Call on 03444 775 774 or visit www.anxietyuk.org.uk"
+        ],
+        "advice": [
+            {
+                "weight": 1,
+                "advice":"Take time out of your day to have breakfast, lunch and dinner. Try to reduce over snacking or eating quick bites to eat as these are not as satisfying and will reduce the quality of your diet",
+                "external": ""
+            },
+            {
+                "weight": 1,
+                "advice": "Try to include lots of fruit, vegetables and fibre in your diet which will improve both physical and mental health",
+                "external": "Article on how to have a sustainable diet"
+            },
+            {
+                "weight": 1,
+                "advice": "Plan your meals ahead. Have a look at online recipes which suggest quick and healthy meals. This will also make your shopping more cost efficient and easier.",
+                "external": "Get some recipe ideas from www.bbcgoodfood.com"
+            }
+        ]
+    },
+
+    "StressLonely": {
+        "serious": [
+            "If you would like more support with relationships, check out the relate website at: www.relate.org.uk"
+        ],
+        "advice": [
+            {
+                "weight": 1,
+                "advice":"Plan activities with your loved ones. Even if it’s just an hour a week, it’s really important to create a balance. Having a planned activity- e.g. cooking your favourite food together- will create something to look forward to, and reduce the likelihood that you’ll run out of time.",
+                "external": "Get some recipe ideas from www.bbcgoodfood.com"
+            },
+            {
+                "weight": 1,
+                "advice": "Make sure you take your allotted annual leave. You are entitled to take time away from work!",
+                "external": "Ideas for what to do on annual leave?"
+            }
+        ]
+    },
+    
+    "Irritable": {
+        "serious": [
+            "The men’s health forum offers 24/7 stress support by text, chat and email. Visit www.menshealthforum.org.uk for more information",
+            "You can also talk to your GP about how you’re feeling. They can offer further advice or refer you to IAPT ",
+            "You can self refer IAPT: Improving access to Psychological Therapies, which will help with anxiety and depression using Psychological therapies. https://www.nhs.uk/service-search/find-a-psychological-therapies-service/",
+            "If you’ve been diagnosed with anxiety, you can access support from Anxiety UK. Call on 03444 775 774 or visit www.anxietyuk.org.uk"
+        ],
+        "advice": [
+            {
+                "weight": 1,
+                "advice":"Try some relaxation techniques such as square breathing. Breath in for 4 seconds, hold for 4 seconds, breath out for 4 seconds, hold for 4 seconds.",
+                "external": "https://www.headspace.com/ offer a free trial to see if ither meditation techniques work for you!"
+            },
+            {
+                "weight": 1,
+                "advice": "Try some mindfulness or meditation",
+                "external": "Check out https://www.mindful.org/meditation/mindfulness-getting-started/ for more information"
+            }
+        ]
+    },
+
+    "NoTime": {
+        "serious": [
+            "The men’s health forum offers 24/7 stress support by text, chat and email. Visit www.menshealthforum.org.uk for more information",
+            "You can also talk to your GP about how you’re feeling. They can offer further advice or refer you to IAPT ",
+            "You can self refer IAPT: Improving access to Psychological Therapies, which will help with anxiety and depression using Psychological therapies. https://www.nhs.uk/service-search/find-a-psychological-therapies-service/",
+            "If you’ve been diagnosed with anxiety, you can access support from Anxiety UK. Call on 03444 775 774 or visit www.anxietyuk.org.uk"
+        ],
+        "advice": [
+            {
+                "weight": 1,
+                "advice": "Speak to your manager or supervisor about your workload. Try a new way to prioritise your work. If you find you continually work overtime, perhaps try to manage your time differently.",
+                "external": "Article on managing time at work?"
+            },
+            {
+                "weight": 1,
+                "advice": "Split big tasks into smaller ones to help you manage and prioritise",
+                "external": "Article on managing time at work?"
+            },
+            {
+                "weight": 1,
+                "advice": "Make sure you’re taking breaks to break up your day, this can reduce stress and boost productivity",
+                "external": "??"
+            }
+        ]
+    },
+
+    "PoorWork": {
+        "serious": [
+            "The Shout Crisis Text Line offer 24/7 support for those who are feeling anxious and/or need urgent support. Text SHOUT to 85258/ or visit https://www.giveusashout.org/",
+            "The men’s health forum offers 24/7 stress support by text, chat and email. Visit www.menshealthforum.org.uk for more information",
+            "You can also talk to your GP about how you’re feeling. They can offer further advice or refer you to IAPT ",
+            "You can self refer IAPT: Improving access to Psychological Therapies, which will help with anxiety and depression using Psychological therapies. https://www.nhs.uk/service-search/find-a-psychological-therapies-service/",
+            "If you’ve been diagnosed with anxiety, you can access support from Anxiety UK. Call on 03444 775 774 or visit www.anxietyuk.org.uk"
+        ],
+        "advice": [
+            {
+                "weight": 1,
+                "advice":"Make sure you’re taking breaks to break up your day, this can reduce stress and boost productivity. ",
+                "external": ""
+            },
+            {
+                "weight": 1,
+                "advice": "Have you tried speaking to colleagues about your work to get a different perspective?",
+                "external": ""
+            },
+            {
+                "weight": 1,
+                "advice": "If you’re still not enjoying work then don’t be afraid to look elsewhere",
+                "external": ""
+            }
+        ]
+    },
+
+    "StressDepression": {
+        "serious": [
+            "If you need urgent help, if you’re feeling suicidal: call free 116 123 or visit the Samaritans website www.samaritans.org.uk  for confidential 24/7 text support",
+            "Papyrus HopelineUK offer urgent support to young people up to the age of 35. Call 0800 068 4141 or visit their website www.papyrus-uk.org",
+            "CALM (campaign against living miserably) support men up to the age of 35 with mental health. Call  0800 58 58 58, or visit the CALM website-  www.thecalmzone.net  for an anonymous conversation with trained staff",
+            "The Shout Crisis Text Line offer 24/7 support for those who are feeling anxious and/or need urgent support. Text SHOUT to 85258/ or visit https://www.giveusashout.org/",
+            "The men’s health forum offers 24/7 stress support by text, chat and email. Visit www.menshealthforum.org.uk for more information",
+            "You can also talk to your GP about how you’re feeling. They can offer further advice or refer you to IAPT ",
+            "You can self refer IAPT: Improving access to Psychological Therapies, which will help with anxiety and depression using Psychological therapies. https://www.nhs.uk/service-search/find-a-psychological-therapies-service/",
+            "If you’ve been diagnosed with anxiety, you can access support from Anxiety UK. Call on 03444 775 774 or visit www.anxietyuk.org.uk"
+        ],
+        "advice": [
+            {
+                "weight": 1,
+                "advice": "Try reaching out to close family or friends.",
+                "external": "??"
+            },
+            {
+                "weight": 1,
+                "advice": "start something new! pick up a new sport or join a club",
+                "external": "stuff in their area"
+            }
+        ]
+    }
+}
