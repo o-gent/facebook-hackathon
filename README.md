@@ -1,6 +1,6 @@
 # Facebook-hackathon
 
-The master branch is in production at [mental-heal](https://mental-heal.herokuapp.com/). Any development should be done in development branch.
+The master branch is in production. Any development should be done in development branch.
 
 Facebook submission 
 
