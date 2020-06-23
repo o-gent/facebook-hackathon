@@ -47,7 +47,8 @@ class Person:
         self.state = "welcome"
         self.narrative = "you"
         self.history: Dict[int, Dict[str, Tuple[str, datetime]]] = {}
-        self.session: int = 0 # keeps track of how many times the user has used the bot
+        self.session = 0 # keeps track of how many times the user has used the bot
+        self.text = "" # used to remember across functions
         logger.info(f"{fbid} object has been created")
         
     
@@ -60,6 +61,7 @@ class Person:
         if self.state == "welcome":         return self.welcome()
         if self.state == "HowAreYou":       return self.how_are_you(text, quick_reply)
         if self.state == "sentiment":       return self.sentiment(text)
+        if self.state == "CoarseCheck":     return self.coarse_reason_check(text, quick_reply)
         if self.state == "CoarseReason":    return self.coarse_reason(text)
         if self.state == "FineReason":      return self.fine_reason(text)
         if self.state == "advice":          return self.advice(text, quick_reply)
@@ -133,14 +135,35 @@ class Person:
                 coarse_confidence = 0
 
             if coarse_confidence > 0.8:
-                self.set_state("CoarseReason")
-                return self.coarse_reason(text)
+                self.set_state("CoarseCheck")
+                return self.coarse_reason_check(text, False)
 
             self.set_state("CoarseReason")
             narrative = "them" if self.narrative == "they" else "you"
-            message = f"Oh no, I am sorry to hear that!"
+            message = f"I'm sorry to hear that!"
             message2 = f"Could you tell me a bit more about what is bringing {narrative} down?"
             return [message, message2], []
+    
+
+    def coarse_reason_check(self, text: str, quick_reply: bool):
+        """ double check if they are feeling lonely, depressed or stressed before skipping stage """
+        if quick_reply and text == "Yeah":
+            self.set_state("FineReason")
+            return self.fine_reason(self.text, quick_reply = True)
+
+        if quick_reply and text == "No 🤔":
+            message = "Please could you tell us a bit more about what is bringing you down?"
+            self.set_state("CoarseReason")
+            return [message], []
+        
+        try: 
+            value, _ = self.get_wit_value(text, state="CoarseReason")
+        except: 
+            return self.coarse_reason(text)
+        
+        self.text = text # this is real bad but we need to remeber what they said
+        message = f"So would you say you are feeling {value}?"
+        return [message], ["Yeah", "No 🤔"]
     
 
     def coarse_reason(self, text: str):
@@ -162,14 +185,17 @@ class Person:
         except:
             # wit failed to identify a reason
             message = f"We can't tell what's up.. 😩 Could you try explaining to a different way?"
-            return message, []
+            return [message], []
     
 
-    def fine_reason(self, text: str):
+    def fine_reason(self, text: str, quick_reply = False):
         """ 
         Used to identify stress and define response 
         Wit result can be Depression, Work, Time, Irritable, Lonely, PoorFood, PoorSleep
         """
+        if quick_reply:
+            return ["Okay so could you explain in more detail?"], []
+
         try:
             value, _ = self.get_wit_value(text)
             advice_options: dict = advice[value]
@@ -226,6 +252,7 @@ class Person:
         """ let's get down to business """
         if text == "end" and quick_reply:
             self.set_state("end")
+            return self.end()
         advice = self.advice_options["serious"].pop()
         return [advice], ["Send more", "end"]
 

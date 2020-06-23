@@ -10,28 +10,23 @@
         "advice": [
             {
                 "weight": 1,
-                "advice": "Try and create an evening routine, stop doing work by a certain time, avoid looking at bright lights or screens an hour before bed. Take time to wind down before, this might be reading a book, listening to music, or even creating a plan/to do list if this helps you get ideas down on paper.",
-                "external": "Website for creating a plan?"
-            },
-            {
-                "weight": 1,
                 "advice": "If possible, try to avoid napping during the day and avoid drinking caffeinated drinks too close to bedtime.",
-                "external": "Suggestions of different uncaffinated drinks to try?"
+                "external": "Why not try green tea or fruit tea to substitute normal caffeinated tea, or decaffinated coffee if you still want the coffee fix. There are also plenty of drinks which are known to help you settle to sleep, such as hot chocolates and malt drinks."
             },
             {
                 "weight": 1,
-                "advice": "Make sure you have a quiet and peaceful environment, it’s ideal if you can leave work based things in a different room to the one you sleep in but failing that keep things at a desk rather than working in bed",
-                "external": ""
+                "advice": "Make sure you have a quiet and peaceful environment, it’s ideal if you can leave work based things in a different room to the one you sleep in.",
+                "external": "Why not try blackout curtains or even earplugs if you have a lot of external noise. Keep things at a desk rather than working in bed"
             },
             {
                 "weight": 1,
                 "advice": "Exercise can often help with sleep. Find what works for you, it might be that gentle exercise in the evening will help you settle down.",
-                "external": "Try the https://www.strava.com/ app to keep track of exercise and keep motivation up"
+                "external": "Try the https://www.strava.com/ app to keep track of exercise and keep motivation up. Or why not try some home workout vidoes. Try  https://www.nhs.uk/oneyou/for-your-body/move-more/home-workout-videos/ for some quick workout ideas"
             },
             {
                 "weight": 1,
                 "advice": "If you’re feeling restless when trying to sleep, try something that you find relaxing, such as reading a book or listening to music.",
-                "external": "Podcasts suggestions?"
+                "external": "Have a look at this review on relaxation podcasts: https://www.townandcountrymag.com/leisure/arts-and-culture/g32701236/best-podcasts-for-sleep/. Listening to nature sounds can also be calming. Why not try listening to some rain sounds https://www.youtube.com/watch?v=q76bMs-NwRk."
             }
         ]
     },
@@ -47,7 +42,7 @@
             {
                 "weight": 1,
                 "advice":"Take time out of your day to have breakfast, lunch and dinner. Try to reduce over snacking or eating quick bites to eat as these are not as satisfying and will reduce the quality of your diet",
-                "external": ""
+                "external": "nothing"
             },
             {
                 "weight": 1,
@@ -139,17 +134,17 @@
             {
                 "weight": 1,
                 "advice":"Make sure you’re taking breaks to break up your day, this can reduce stress and boost productivity. ",
-                "external": ""
+                "external": "nothing"
             },
             {
                 "weight": 1,
                 "advice": "Have you tried speaking to colleagues about your work to get a different perspective?",
-                "external": ""
+                "external": "nothing"
             },
             {
                 "weight": 1,
                 "advice": "If you’re still not enjoying work then don’t be afraid to look elsewhere",
-                "external": ""
+                "external": "nothing"
             }
         ]
     },
