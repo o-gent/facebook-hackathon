@@ -1,5 +1,7 @@
 # Facebook-hackathon
 
+Our submission for https://fbmessaging2.devpost.com/ 
+
 Any API keys in the code are now deprecated! It's easier to leave them in and preserve the git history.
 
 
