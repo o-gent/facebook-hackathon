@@ -2,9 +2,8 @@
 
 Any API keys in the code are now deprecated! It's easier to leave them in and preserve the git history.
 
-Facebook submission 
 
-Inspiration
+## Inspiration
 Wanted to offer a low level support for those struggling with mental health to make it as easy as possible for people to find solutions to their issues. Speaking to external sources such as a GP or referring into a Psychological service can be intimidating for those who need a little advice with day to day things, so our service combats this.
 
 ## What it does
