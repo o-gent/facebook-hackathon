@@ -1,6 +1,8 @@
 # Facebook-hackathon
 
-Our submission for https://fbmessaging2.devpost.com/ 
+Our submission for https://fbmessaging2.devpost.com/
+
+The demonstration video can be seen here! https://vimeo.com/431949238
 
 Any API keys in the code are now deprecated! It's easier to leave them in and preserve the git history.
 
